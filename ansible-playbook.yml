@@ -1,0 +1,21 @@
+- name: Configure Docker on EC2 Instances
+  hosts: all
+  become: true
+  connection: ssh
+  tasks:
+  - name: updating apt
+    command: sudo apt-get update
+
+  - name: Install Docker
+    apt:
+      name: docker.io
+      state: present
+
+  - name: Start Docker Service
+    service:
+      name: docker
+      state: started
+
+  - name: Deploy Docker Container
+    command: docker run -itd -p 8084:8082 mujahed/medicure:1.0
+
