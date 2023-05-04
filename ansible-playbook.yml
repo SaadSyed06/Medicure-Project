@@ -1,21 +1,26 @@
 - name: Configure Docker on EC2 Instances
   hosts: all
   become: true
-  connection: ssh
   tasks:
-  - name: updating apt
-    command: sudo apt-get update
+    - name: Update package list
+      apt:
+        update_cache: yes
 
-  - name: Install Docker
-    apt:
-      name: docker.io
-      state: present
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
 
-  - name: Start Docker Service
-    service:
-      name: docker
-      state: started
+    - name: Start Docker Service
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
 
-  - name: Deploy Docker Container
-    command: docker run -itd -p 8084:8082 mujahed/medicure:1.0
-
+    - name: Deploy Docker Container
+      docker_container:
+        name: medicure
+        image: mujahed/medicure:1.0
+        state: started
+        ports:
+          - "8084:8082"
