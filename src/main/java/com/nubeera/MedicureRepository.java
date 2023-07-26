@@ -1,4 +1,4 @@
-package com.nubeera;
+package com.project.nubeera;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

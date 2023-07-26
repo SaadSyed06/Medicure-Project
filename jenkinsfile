@@ -1,11 +1,85 @@
-pipeline {
-  agent any
+// pipeline {
+//   agent any
 
-  stages {
-    stage('Hello') {
-      steps {
-        echo 'Hello World'
-      }
+//   stages {
+//     stage('Hello') {
+//       steps {
+//         echo 'Hello World'
+//       }
+//     }
+//   }
+// }
+/////////////////////////////////////////////////////////////
+pipeline {
+    agent any
+    
+    stages {
+
+        stage('Checkout From Github') {
+            steps {
+                // Get some code from a GitHub repository
+                git 'https://oauth:GIT_TOKEN@github.com/SaadSyed06/Medicure-Project.git'
+                
+            }
+
+            // post {
+            //     // If Maven was able to run the tests, even if some of the test
+            //     // failed, record the test results and archive the jar file.
+            //     success {
+            //         junit '**/target/surefire-reports/TEST-*.xml'
+            //         archiveArtifacts 'target/*.jar'
+            //     }
+            // }
+        }
+        stage("Check Build Version"){
+            steps{
+                echo 'Finding Maven Version...'
+                // Run Maven on a Unix agent.
+                mvn -v
+            }
+        }
+
+        stage("Clean Previous Generated Project"){
+            steps{
+                echo 'Clean...'
+                // Run Maven on a Unix agent.
+                sh "mvn clean"
+            }
+        }
+        stage("Start Building New Project"){
+            steps{
+                echo 'Build...'
+                // Run Maven on a Unix agent.
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+            }
+        }
+        stage("Test"){
+            steps{
+                echo 'Test...'
+                // To run Maven on a Windows agent, use
+                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+            }
+        }
+        //TF Execution
+        ////////////////////
+        // stage ("terraform init") {
+        //     steps {
+        //         sh ('terraform init') 
+        //     }
+        // }
+
+
+        //Doocker
+        ////////////////////
+        // stage('Deploy') {
+        //     steps {
+        //         sh 'docker stop nube-cont || true'
+        //         sh 'docker rm nube-cont || true'
+        //         sh 'docker build -t nube-img .'
+        //         sh 'docker run -d --name nube-cont -p 8080:8080 nube-img'
+        //     }
+        // }
+        
     }
-  }
+   
 }

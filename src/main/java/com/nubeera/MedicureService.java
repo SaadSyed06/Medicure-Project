@@ -1,4 +1,4 @@
-package com.nubeera;
+package com.project.nubeera;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +11,10 @@ public class MedicureService {
 	
 	public Doctor registerDoctor(Doctor doctor) {
 		return doctorRepository.save(doctor);
-		}
+	}
 
-	public Doctor listAllDoctors() {
-		Doctor doctor = new Doctor("MP1110","Mujahed","Neurologist","26 Years");
+	public Doctor getDoctors() {
+		Doctor doctor = new Doctor("MP1110","Saad","Neurologist","15 Years");
 		return doctorRepository.save(doctor);
 	}
 
@@ -24,12 +24,12 @@ public class MedicureService {
 	}
 	
 	public Doctor registerDummyDoctor() {
-		Doctor doctor = new Doctor("MP1110","Mujahed","Neurologist","26 Years");
+		Doctor doctor = new Doctor("MP1110","Saad","Neurologist","15 Years");
 		return doctor;
 	}
 	
-	public String sayHello() {
-		return "Greeting from Doctor Mujahed";
+	public String greetingFromDoctor() {
+		return "Welcome from Doctor Saad";
 	}
 
 }

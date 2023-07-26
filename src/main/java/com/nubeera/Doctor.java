@@ -1,4 +1,4 @@
-package com.nubeera;
+package com.project.nubeera;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

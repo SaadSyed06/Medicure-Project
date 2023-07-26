@@ -1,7 +1,7 @@
 provider "aws" {
   region = "us-east-1"
-  access_key = "AKIAVON4JPQQKZKKIG4V"
-  secret_key = "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"
+  access_key = "access-key"
+  secret_key = "secret-access-key"
 }
 
 # resource "random_pet" "pet_name" {
